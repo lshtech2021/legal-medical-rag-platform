@@ -34,3 +34,15 @@ cd frontend
 npm install
 NEXT_PUBLIC_API_URL=http://localhost:8000/api/v1 npm run dev
 ```
+
+
+## Extraction/OCR support
+- PDF parsing via `pypdf`
+- DOCX parsing via `python-docx`
+- Image OCR (`png/jpg/tiff/bmp/webp`) via `pytesseract`
+
+Install system dependency for OCR:
+```bash
+# Ubuntu/Debian
+sudo apt-get update && sudo apt-get install -y tesseract-ocr
+```

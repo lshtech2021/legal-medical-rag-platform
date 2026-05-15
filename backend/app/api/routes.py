@@ -30,7 +30,12 @@ async def upload_document(file: UploadFile = File(...), db: Session = Depends(ge
     db.add(doc)
     db.flush()
 
-    pages = extract_pages(file.filename, content)
+    try:
+        pages = extract_pages(file.filename, content)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    except RuntimeError as exc:
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
     for idx, text in enumerate(pages, start=1):
         db.add(DocumentPage(document_id=doc.id, page_number=idx, text=text))
         for c in chunk_text(text):
